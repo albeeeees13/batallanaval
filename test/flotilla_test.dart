@@ -3,6 +3,13 @@ import 'package:test/test.dart';
 import 'package:battleship/punto.dart';  
 
 void main() {
+  var barcosincorrectos =[
+Barco(tipo: TiposBarcos.bote,puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+Barco(tipo: TiposBarcos.bote,puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+Barco(tipo: TiposBarcos.submarino,puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+Barco(tipo: TiposBarcos.crucero,puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+Barco(tipo: TiposBarcos.portaaviones,puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+  ];
   test('cuando creo una flotilla con menos de 5 tipos de barcos lanza FlotillaCantidadExcepcion', () {
     expect(
       () => Flotilla([
@@ -40,6 +47,22 @@ void main() {
 
     expect(estanPegados(0, 1), isTrue); // bote y lancha están pegados
     expect(estanPegados(1, 3), isFalse); // lancha y crucero no están pegados
-  });
+  }); 
+  test('Lanza excepción si hay barcos fuera del mapa o tipos repetidos', () {
+  final barcosIncorrectos = [
+    Barco(tipo: TiposBarcos.bote, puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+    Barco(tipo: TiposBarcos.bote, puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+    Barco(tipo: TiposBarcos.submarino, puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+    Barco(tipo: TiposBarcos.crucero, puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+    Barco(tipo: TiposBarcos.portaaviones, puntoinicial: Punto(columna: 1, fila: 1), direccion: DireccionesHacia.abajo),
+  ];
+
+  expect(() => Flotilla(barcosIncorrectos), throwsA(anyOf(
+    isA<FlotillaTipos>(),
+    isA<FlotillaFueraDelMapa>(),
+    isA<FlotillaBarcosSuperpuestos>() // si tienes una excepción para barcos superpuestos
+  )));
+});
+
 }
 
