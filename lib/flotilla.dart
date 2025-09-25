@@ -80,5 +80,5 @@ class FlotillaCantidadExcepcion extends Error{}
 class FlotillaTipos extends Error{}
 class FlotillaFueraDelMapa extends Error{}
 class FlotillaBarcosSuperpuestos extends Error{}
-
+class FlotillaBarcosNoConsecutivos extends Error{}
 
